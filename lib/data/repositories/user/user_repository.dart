@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:location/location.dart';
 import 'package:test_user_map/src/domain/models/user_model.dart';
 
 mixin IUserRepo {

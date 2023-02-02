@@ -7,6 +7,7 @@ import 'package:test_user_map/core/bloc_geolocation/bloc/geolocation_bloc.dart';
 import 'package:test_user_map/src/ui/widgets/main/map/components/create_user_but.dart';
 import 'package:test_user_map/src/ui/widgets/main/map/components/info_card_widget.dart';
 import 'package:test_user_map/src/ui/widgets/main/map/components/markerX.dart';
+import 'package:test_user_map/src/ui/widgets/main/map/components/show_user_but.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({super.key});
@@ -22,9 +23,8 @@ class _MapWidgetState extends State<MapWidget> {
   bool infoVisible = false;
   @override
   void initState() {
-   
     super.initState();
-    BlocProvider.of<GeolocationBloc>(context).add(GetData());
+    BlocProvider.of<GeolocationBloc>(context).add(const GetData());
   }
 
   @override
@@ -110,9 +110,7 @@ class _MapWidgetState extends State<MapWidget> {
                                         color: Colors.yellow,
                                         borderRadius: BorderRadius.circular(50),
                                         border: Border.all(
-                                          width: 5,
-                                          color: Colors.blue
-                                        ),
+                                            width: 5, color: Colors.blue),
                                       ),
                                     ),
                                   ),
@@ -132,6 +130,7 @@ class _MapWidgetState extends State<MapWidget> {
                 ],
               ),
               const CreateUserButton(),
+              ShowUserButton(mapController: mapController),
             ],
           );
         }
