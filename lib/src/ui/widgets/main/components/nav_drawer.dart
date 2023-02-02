@@ -32,7 +32,7 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.input),
             title: const Text(MainAppStrings.mainButton),
-          onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.of(context).pop()},
           ),
           ListTile(
             leading: const Icon(Icons.verified_user),
@@ -48,16 +48,16 @@ class NavDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text(MainAppStrings.logoutButton),
-            onTap: () => {
-               context.read<AuthBloc>().add(SignOutRequested())
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => const AuthScreen()))
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => const AuthScreen()))
-            },
-          ),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text(MainAppStrings.logoutButton),
+              onTap: () {
+                context.read<AuthBloc>().add(SignOutRequested());
+
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AuthScreen()));
+              }),
         ],
       ),
     );
