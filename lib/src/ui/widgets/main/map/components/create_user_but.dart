@@ -1,13 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:test_user_map/core/bloc_geolocation/bloc/geolocation_bloc.dart';
-import 'package:test_user_map/data/repositories/auth/auth_repository.dart';
 import 'package:test_user_map/data/repositories/user/user_repository.dart';
+import 'package:test_user_map/resources/app_strings.dart';
+import 'package:test_user_map/resources/app_styles.dart';
 import 'package:test_user_map/src/domain/models/user_model.dart';
 
 class CreateUserButton extends StatelessWidget {
@@ -34,9 +31,9 @@ class CreateUserButton extends StatelessWidget {
             bottom: 20,
             right: 20,
             child: SizedBox(
-              width: 100,
               height: 50,
               child: ElevatedButton(
+                style: AppStyles.createUserButton,
                 onPressed: () {
                   final user = UserModel(
                     id: state.currentUser?.uid,
@@ -49,7 +46,7 @@ class CreateUserButton extends StatelessWidget {
 
                   UserRepository().createUser(user);
                 },
-                child: const Text('Create User'),
+                child: const Text(MainAppStrings.createUser),
               ),
             ),
           );

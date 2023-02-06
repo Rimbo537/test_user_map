@@ -6,8 +6,6 @@ import 'package:test_user_map/core/bloc_geolocation/bloc/geolocation_bloc.dart';
 import 'package:test_user_map/data/repositories/auth/auth_repository.dart';
 import 'package:test_user_map/data/repositories/geolocation/geolocation_repository.dart';
 import 'package:test_user_map/src/ui/screens/auth/auth_screen.dart';
-import 'package:test_user_map/src/ui/screens/main/main_screen.dart';
-import 'package:test_user_map/src/ui/screens/profile/profile_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,9 +46,6 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: const AuthScreen(),
-          // AuthScreen
-          // MainScreen
-          // ProfileScreen
         ),
       ),
     );

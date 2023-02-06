@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:test_user_map/data/repositories/geolocation/geolocation_repository.dart';
 import 'package:test_user_map/src/domain/models/user_model.dart';
@@ -19,6 +19,8 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
     on<GetData>(_onGetData);
   }
   final GeolocationRepository _geolocationRepo;
+  // late StreamSubscription<Position> streamSubscription;
+  // Position? curPosition;
 
   Future<void> _onLoadAuth(
     LoadGeolocation event,
@@ -32,6 +34,15 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
       );
 
       final position = await _geolocationRepo.getCurrentLocation();
+
+      // streamSubscription!.cancel();
+      // streamSubscription = await _geolocationRepo.getPosition().listen((event) {
+      //   curPosition = event;
+      //   // print(event == null
+      //   //     ? 'Unknown'
+      //   //     : event.latitude.toString() + ', ' + event.longitude.toString());
+      // });
+
       final currentUser = await _geolocationRepo.getCurrentUser();
 
       return emit(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,12 +9,11 @@ mixin IGeolocationRepo {
   Future<Position> getCurrentLocation();
   Future<User?> getCurrentUser();
   Future<List<UserModel>> getUserData();
+  Stream<Position> getPosition();
 }
 
 class GeolocationRepository implements IGeolocationRepo {
   final firestoreUserData = FirebaseFirestore.instance.collection('users');
-
-
 
   @override
   Future<Position> getCurrentLocation() async {
@@ -44,7 +45,7 @@ class GeolocationRepository implements IGeolocationRepo {
   @override
   Future<List<UserModel>> getUserData() async {
     List<UserModel> userList = [];
-  
+
     try {
       final users = await FirebaseFirestore.instance.collection("users").get();
       users.docs.forEach((element) {
@@ -56,10 +57,27 @@ class GeolocationRepository implements IGeolocationRepo {
     }
   }
 
+  @override
+  Stream<Position> getPosition() async* {
+    yield* Geolocator.getPositionStream();
+  }
+
   // @override
-  // Future<UserModel> getUserData() => firestoreUserData
-  //     .doc(FirebaseAuth.instance.currentUser!.uid)
-  //     .get()
-  //     .then((data) => UserModel.fromJson(data.data() as Map<String, dynamic>)
-  //         .copyWith(id: data.id));
+  // Future<void> getPosition() async {
+  //   StreamSubscription<Position> homeTabPostionStream;
+
+  //   var locationSettings = const LocationSettings(
+  //       accuracy: LocationAccuracy.high, distanceFilter: 10);
+
+  //   homeTabPostionStream =
+  //       await Geolocator.getPositionStream(locationSettings: locationSettings)
+  //           .listen((event) {
+  //     // print(event == null
+  //     //     ? 'Unknown'
+  //     //     : event.latitude.toString() + ', ' + event.longitude.toString());
+  //     position = event;
+  //   });
+  // }
+  // }
+
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_user_map/core/bloc/auth_bloc.dart';
-import 'package:test_user_map/resources/app_images.dart';
 import 'package:test_user_map/resources/app_strings.dart';
-import 'package:test_user_map/resources/app_styles.dart';
+import 'package:test_user_map/src/theme/app_colors.dart';
 import 'package:test_user_map/src/ui/screens/auth/auth_screen.dart';
 import 'package:test_user_map/src/ui/screens/profile/profile_screen.dart';
+import 'package:test_user_map/src/ui/widgets/main/components/drawer_header.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({super.key});
@@ -18,16 +18,9 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           const DrawerHeader(
             decoration: BoxDecoration(
-                color: Colors.green,
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(AppImages.drawerImage))),
-            child: Center(
-              child: Text(
-                MainAppStrings.sideMenuName,
-                style: AppStyles.titleStyle,
-              ),
+              color: AppColors.bgColor,
             ),
+            child: UserHead(),
           ),
           ListTile(
             leading: const Icon(Icons.input),
@@ -37,14 +30,9 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.verified_user),
             title: const Text(MainAppStrings.profileButton),
-            //  onTap: () => {Navigator.of(context).pop()}, "pop" replace to "push", чтобы оставить аппБар
             onTap: () => {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const ProfileScreen()))
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => const ProfileScreen()))
             },
           ),
           ListTile(
@@ -52,6 +40,7 @@ class NavDrawer extends StatelessWidget {
               title: const Text(MainAppStrings.logoutButton),
               onTap: () {
                 context.read<AuthBloc>().add(SignOutRequested());
+                _signOutWithGoogle(context);
 
                 Navigator.pushReplacement(
                     context,
@@ -62,9 +51,10 @@ class NavDrawer extends StatelessWidget {
       ),
     );
   }
-  //  void _signOutWithGoogle(context) {
-  //   BlocProvider.of<AuthBloc>(context).add(
-  //     SignOutRequested(),
-  //   );
-  // }
+
+  void _signOutWithGoogle(context) {
+    BlocProvider.of<AuthBloc>(context).add(
+      SignOutRequested(),
+    );
+  }
 }

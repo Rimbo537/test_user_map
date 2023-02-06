@@ -42,6 +42,7 @@ dependencies:
   flash: ^2.0.5
   freezed: ^2.1.0
   get_it: ^7.2.0
+  flutter_colorpicker: ^1.0.3
   
   json_annotation: ^4.7.0
   json_serializable: ^6.5.4
@@ -54,13 +55,13 @@ dependencies:
 
   # State management
   flutter_bloc: ^8.1.1
-
   equatable: ^2.0.5
 
   #Firebase Database
-  cloud_firestore: 4.3.1
+  cloud_firestore: ^4.3.1
   firebase_auth: ^4.2.5
   firebase_core: ^2.4.1
+
 
 
 
@@ -78,6 +79,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.2.17
+
+
+flutter_native_splash:
+  image: assets/images/splash.png
+  color: "#883db8"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

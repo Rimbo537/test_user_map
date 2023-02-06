@@ -8,6 +8,8 @@ import 'package:test_user_map/core/bloc_geolocation/bloc/geolocation_bloc.dart';
 import 'package:test_user_map/resources/app_icons.dart';
 import 'package:test_user_map/resources/app_images.dart';
 import 'package:test_user_map/resources/app_strings.dart';
+import 'package:test_user_map/resources/app_styles.dart';
+import 'package:test_user_map/src/theme/app_colors.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({super.key});
@@ -32,53 +34,39 @@ class ProfileWidget extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: const Text(ProfileStrings.profileAppBar),
+              backgroundColor: AppColors.bgColor,
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            '${state.currentUser?.photoURL}',
-                          ),
+                  const SizedBox(height: 30),
+                  Center(
+                    child: SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          '${state.currentUser?.photoURL}',
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${state.currentUser?.displayName}',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '${state.currentUser?.email}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black45,
-                            ),
-                          ),
-                        ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${state.currentUser?.displayName}',
+                        style: AppStyles.profileTitle,
+                      ),
+                      Text(
+                        '${state.currentUser?.email}',
+                        style: AppStyles.profileSubtitle,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Properties',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ],
               ),
             ),

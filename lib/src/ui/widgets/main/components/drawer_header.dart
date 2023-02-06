@@ -4,14 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_user_map/core/bloc_geolocation/bloc/geolocation_bloc.dart';
 import 'package:test_user_map/resources/app_styles.dart';
 
-class InfoCardWidget extends StatefulWidget {
-  const InfoCardWidget({super.key});
+class UserHead extends StatelessWidget {
+  const UserHead({super.key});
 
-  @override
-  State<InfoCardWidget> createState() => _InfoCardWidgetState();
-}
-
-class _InfoCardWidgetState extends State<InfoCardWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GeolocationBloc, GeolocationState>(
@@ -29,29 +24,37 @@ class _InfoCardWidgetState extends State<InfoCardWidget> {
             child: CircularProgressIndicator(),
           );
         } else {
-          final user = state.currentUser;
-          return DecoratedBox(
-            decoration: AppDecorations.infoMapWidget,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+          return Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${user?.displayName}',
-                    style: AppStyles.mapUserName,
-                    maxLines: 1,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    '${user?.email}',
-                    style: AppStyles.mapEmail,
+                  SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        '${state.currentUser?.photoURL}',
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${state.currentUser?.displayName}',
+                        style: AppStyles.drawerUserName,
+                      ),
+                      Text(
+                        '${state.currentUser?.email}',
+                        style: AppStyles.drawerEmail,
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ),
+            ],
           );
         }
       },

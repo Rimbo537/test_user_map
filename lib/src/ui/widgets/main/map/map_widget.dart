@@ -1,13 +1,18 @@
+import 'dart:async';
+
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+
 import 'package:test_user_map/core/bloc_geolocation/bloc/geolocation_bloc.dart';
+import 'package:test_user_map/data/repositories/geolocation/geolocation_repository.dart';
 import 'package:test_user_map/src/ui/widgets/main/map/components/create_user_but.dart';
-import 'package:test_user_map/src/ui/widgets/main/map/components/info_card_widget.dart';
 import 'package:test_user_map/src/ui/widgets/main/map/components/markerX.dart';
 import 'package:test_user_map/src/ui/widgets/main/map/components/show_user_but.dart';
+import 'package:test_user_map/src/ui/widgets/main/map/components/user_marker.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({super.key});
@@ -19,12 +24,29 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   static const _latKiev = 50.4547;
   static const _lonKiev = 30.5238;
-  final MapController mapController = MapController();
+  MapController mapController = MapController();
+  Stream<Position> geolocationRepository =
+      GeolocationRepository().getPosition();
   bool infoVisible = false;
+  late StreamSubscription<Position> homeTabPostionStream;
+  Position? position;
+
   @override
   void initState() {
-    super.initState();
     BlocProvider.of<GeolocationBloc>(context).add(const GetData());
+
+    homeTabPostionStream = geolocationRepository.listen((event) {
+      setState(() {
+        position = event;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    homeTabPostionStream.cancel();
+    super.dispose();
   }
 
   @override
@@ -50,8 +72,8 @@ class _MapWidgetState extends State<MapWidget> {
                 mapController: mapController,
                 options: MapOptions(
                   center: LatLng(
-                    state.position?.latitude ?? _latKiev,
-                    state.position?.longitude ?? _lonKiev,
+                    position?.latitude ?? _latKiev,
+                    position?.longitude ?? _lonKiev,
                   ),
                   zoom: 9.2,
                 ),
@@ -62,75 +84,35 @@ class _MapWidgetState extends State<MapWidget> {
                     userAgentPackageName: 'com.example.app',
                   ),
                   MarkerLayer(
+                    markers: state.userModel
+                        .map((e) => MarkerX(userModel: e))
+                        .toList(),
+                  ),
+                  MarkerLayer(
                     rotate: true,
                     markers: [
                       Marker(
                         width: 300,
                         height: 200,
                         point: LatLng(
-                          state.position?.latitude ?? _latKiev,
-                          state.position?.longitude ?? _lonKiev,
+                          position?.latitude ?? _latKiev,
+                          position?.longitude ?? _lonKiev,
                         ),
                         builder: (context) {
-                          return Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: SizedBox(
-                                  width: 150,
-                                  height: 70,
-                                  child: Visibility(
-                                    visible: infoVisible,
-                                    child: const InfoCardWidget(),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    if (infoVisible == false) {
-                                      infoVisible = true;
-                                    } else {
-                                      infoVisible = false;
-                                    }
-                                  });
-                                },
-                                child: Align(
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: Colors.yellow,
-                                        borderRadius: BorderRadius.circular(50),
-                                        border: Border.all(
-                                            width: 5, color: Colors.blue),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          return UserMarker(
+                            infoVisible: infoVisible,
                           );
                         },
                       ),
                     ],
                   ),
-                  MarkerLayer(
-                    markers: state.userModel
-                        .map((e) => MarkerX(userModel: e))
-                        .toList(),
-                  ),
                 ],
               ),
               const CreateUserButton(),
-              ShowUserButton(mapController: mapController),
+              ShowUserButton(
+                mapController: mapController,
+                position: position,
+              ),
             ],
           );
         }

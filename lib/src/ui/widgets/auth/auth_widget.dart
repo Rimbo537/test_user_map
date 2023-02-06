@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_user_map/core/bloc/auth_bloc.dart';
-import 'package:test_user_map/resources/app_icons.dart';
+import 'package:test_user_map/resources/app_images.dart';
+import 'package:test_user_map/src/ui/widgets/auth/components/auth_button.dart';
 
 class AuthWidget extends StatelessWidget {
   const AuthWidget({super.key});
@@ -16,38 +15,23 @@ class AuthWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Authorization with Google',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                width: 150,
-                height: 150,
-                child: Image.asset(AppIcons.googleLogo),
-              ),
               SizedBox(
                 width: 200,
-                // height: 100,
-                child: ElevatedButton(
-                  onPressed: () {
-                    _authenticateWithGoogle(context);
-                  },
-                  child: const Text(
-                    'Authorization',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
+                height: 200,
+                child: Image.asset(
+                  AppImages.splash,
                 ),
+              ),
+              const SizedBox(height: 100),
+              const SizedBox(
+                width: double.infinity,
+                height: 100,
+                child: AuthButton(),
               )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  void _authenticateWithGoogle(context) {
-    BlocProvider.of<AuthBloc>(context).add(
-      GoogleSignInRequested(),
     );
   }
 }
