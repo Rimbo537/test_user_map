@@ -36,20 +36,20 @@ The profile displays the user's avatar, name, and email.
 
 **Splash screen**
 
-![Alt text](Markdown/screen.jpg)
+<img src="Markdown/screen.jpg" height="500">
 
 **Authorization screen**
 
-![Alt text](Markdown/screen1.jpg)
+<img src="Markdown/screen1.jpg" height="500">
 
 **Main screen**
 
-![Alt text](Markdown/screen2.jpg)
+<img src="Markdown/screen2.jpg" height="500">
 
 **Side menu**
 
-![Alt text](Markdown/screen3.jpg)
+<img src="Markdown/screen3.jpg" height="500">
 
 **Profile screen**
 
-![Alt text](Markdown/screen4.jpg)
+<img src="Markdown/screen4.jpg" height="500">
