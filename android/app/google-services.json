@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1013246993774",
+    "firebase_url": "https://test-user-map-default-rtdb.firebaseio.com",
     "project_id": "test-user-map",
     "storage_bucket": "test-user-map.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1013246993774-8f1d153j4ea989h8sv7moet3va68m1f5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test_user_map",
+            "certificate_hash": "ee6f9b274e1c9bcdd70b468d8a57c822a190bb4c"
+          }
+        },
         {
           "client_id": "1013246993774-elfo59rncgjv7rmtl4mms566jrc6uohk.apps.googleusercontent.com",
           "client_type": 1,
